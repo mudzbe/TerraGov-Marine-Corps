@@ -84,13 +84,12 @@
 	if(!get_organ_slot(ORGAN_SLOT_HEART))
 		to_chat(user, span_notice("The heart is no longer here!"))
 		return
-	log_combat(user, src, "ripped [src]'s heart")
+	log_combat(user, src, "ripped [src]'s heart", I)
 	visible_message(span_notice("[user] ripped off [src]'s heart!"), span_notice("You ripped off [src]'s heart!"))
 	remove_organ_slot(ORGAN_SLOT_HEART)
 	var/obj/item/organ/heart/heart = new
 	heart.die()
-	if(pickup_heart)
-		user.put_in_hands(heart)
+	user.dropItemToGround(heart)
 	if(iszombie(src))
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(fade_out), heart), 9.5 SECONDS)
 		QDEL_IN(heart, 10 SECONDS)
